@@ -3,14 +3,10 @@ import genWeb from "@srnd/codecup-genericwebsite";
 import fs from 'fs';
 import path from 'path';
 
-if (!('FLAG' in process.env)) {
-	console.log("Error: Flag is not set.")
-	process.exit(1);
-}
-
+const flag = process.env.FLAG || 'test';
 const app = new Koa();
 const port = process.env.PORT || 8080;
-const tpl = genWeb.randomTemplate(process.env.FLAG);
+const tpl = genWeb.randomTemplate(flag);
 
 app.use(ctx => {
 	if (ctx.method == 'GET') {
