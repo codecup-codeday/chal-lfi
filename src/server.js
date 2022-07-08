@@ -10,18 +10,19 @@ const tpl = genWeb.randomTemplate(flag);
 
 app.use(ctx => {
 	if (ctx.method == 'GET') {
-		if (ctx.url == "/") {
-			ctx.url += "index";
-		}
-		ctx.url += ".html";
-		try {
-			const text = fs.readFileSync(path.join(process.cwd(), "/public", ctx.path), 'utf8');
-			ctx.body = tpl(ctx.path, text);
-		} catch (err) {
-			if (err.code == 'ENOENT') {
-				ctx.status = 404;
-			} else {
-				throw err;
+		if (ctx.path !== "/" || ctx.query.file === undefined) {
+			ctx.redirect('/?file=index');
+		} else {
+			ctx.url += ".html";
+			try {
+				const text = fs.readFileSync(path.join(process.cwd(), "/public", ctx.query.file), 'utf8');
+				ctx.body = tpl(ctx.path, text);
+			} catch (err) {
+				if (err.code == 'ENOENT') {
+					ctx.status = 404;
+				} else {
+					throw err;
+				}
 			}
 		}
 	} else {
