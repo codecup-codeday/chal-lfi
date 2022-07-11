@@ -12,6 +12,9 @@
   ],
   "type": "module",
   "packageManager": "pnpm@7.5.0",
+  "os": [
+    "linux"
+  ],
   "dependencies": {
     "@srnd/codecup-genericwebsite": "^1.0.1",
     "koa": "^2.13.4"
