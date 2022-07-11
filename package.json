@@ -1,6 +1,6 @@
 {
   "name": "codecup-lfi",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A simple Node server vulnerable to LFI.",
   "main": "src/server.js",
   "scripts": {

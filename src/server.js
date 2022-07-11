@@ -16,7 +16,7 @@ app.use(ctx => {
 			ctx.url += ".html";
 			try {
 				const text = fs.readFileSync(path.join(process.cwd(), "/public", ctx.query.file), 'utf8');
-				ctx.body = tpl(ctx.path, text);
+				ctx.body = tpl(ctx.query.file, text);
 			} catch (err) {
 				if (err.code == 'ENOENT') {
 					ctx.status = 404;
