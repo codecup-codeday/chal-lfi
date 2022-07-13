@@ -14,12 +14,15 @@ app.use(ctx => {
 			ctx.redirect('/?file=index');
 		} else {
 			ctx.url += ".html";
+			const absPath = path.join(process.cwd(), "public", ctx.query.file);
 			try {
-				const text = fs.readFileSync(path.join(process.cwd(), "/public", ctx.query.file), 'utf8');
-				ctx.body = tpl(ctx.query.file, text);
+				const text = fs.readFileSync(absPath, 'utf8');
+				ctx.body = tpl(absPath, text);
 			} catch (err) {
 				if (err.code == 'ENOENT') {
+					const absPathSafe = absPath.replace(/</g, '&lt;');
 					ctx.status = 404;
+					ctx.body = tpl(absPath, `<h2>404 ERROR:</h2><p><code>${absPathSafe}</code> Not Found.</p>`);
 				} else {
 					throw err;
 				}
