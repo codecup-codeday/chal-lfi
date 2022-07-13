@@ -4,9 +4,10 @@ import fs from 'fs';
 import path from 'path';
 
 const flag = process.env.FLAG || 'test';
+const seed = process.env.SEED || flag;
 const app = new Koa();
 const port = process.env.PORT || 8080;
-const tpl = genWeb.randomTemplate(flag);
+const tpl = genWeb.randomTemplate(seed);
 
 app.use(ctx => {
 	if (ctx.method == 'GET') {

@@ -14,18 +14,20 @@ docker build -t codecup-codeday/chal-lfi:latest .
 
 `FLAG` - Required, the flag the user will find.
 `PORT` - Not Required, the port the app runs on - defaults to `8080`.
+`SEED` - Not Required, the seed the website will be generated on  - defaults to the FLAG env.
 
 ### Example
 
 ```shell
 # Set Environment Variable(s)
 export PORT=8080
+export SEED=test
 export FLAG=test
 # Bare Metal
 pnpm install --prod
 node src/server.js
 # Docker Container
-docker run -e PORT -e FLAG -p $PORT:$PORT codecup-codeday/chal-lfi:latest
+docker run -e PORT -e SEED -e FLAG -p $PORT:$PORT codecup-codeday/chal-lfi:latest
 # Docker Container w/ Init
-docker run -it --init -e PORT -e FLAG -p $PORT:$PORT codecup-codeday/chal-lfi:latest
+docker run -it --init -e PORT -e SEED -e FLAG -p $PORT:$PORT codecup-codeday/chal-lfi:latest
 ```
