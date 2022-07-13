@@ -12,9 +12,8 @@ const tpl = genWeb.randomTemplate(seed);
 app.use(ctx => {
 	if (ctx.method == 'GET') {
 		if (ctx.path !== "/" || ctx.query.file === undefined) {
-			ctx.redirect('/?file=index');
+			ctx.redirect('/?file=index.html');
 		} else {
-			ctx.url += ".html";
 			const absPath = path.join(process.cwd(), "public", ctx.query.file);
 			try {
 				const text = fs.readFileSync(absPath, 'utf8');
