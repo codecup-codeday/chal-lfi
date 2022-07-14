@@ -19,17 +19,19 @@ app.use(ctx => {
 				const text = fs.readFileSync(absPath, "utf8");
 				ctx.body = tpl(absPath, text);
 			} catch (err) {
-				if (err.code == "ENOENT") {
-					const absPathSafe = absPath.replace(/</g, '&lt;');
-					ctx.status = 404;
-					ctx.body = tpl(absPath, `<h2>404 ERROR:</h2><p><code>${absPathSafe}</code> Not Found.</p>`);
-				} else if (err.code == "EISDIR") {
-					const absPathSafe = absPath.replace(/</g, '&lt;');
-					ctx.status = 400;
-					ctx.body = tpl(absPath, `<h2>400 ERROR:</h2><p><code>${absPathSafe}</code> Is A Directory.</p>`);
-				} else {
-					throw err;
+				const safeErr = err.toString().replace(/</g, '&lt;');
+				switch (err.code) {
+					case "ENOENT":
+						ctx.status = 404;
+						break;
+					case "EISDIR": case "ENOTDIR":
+						ctx.status = 400;
+						break;
+					default:
+						ctx.status = 500;
+						break;
 				}
+				ctx.body = tpl(absPath, `<h2>${ctx.status} ERROR:</h2><p>${safeErr}</p>`);
 			}
 		}
 	} else {
