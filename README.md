@@ -1,5 +1,5 @@
 # CodeCup Challenge LFI
-
+[![Build](https://github.com/codecup-codeday/chal-lfi/actions/workflows/docker-image.yml/badge.svg)](https://github.com/codecup-codeday/chal-lfi/actions/workflows/docker-image.yml)
 ## A simple Node server vulnerable to LFI
 
 This is a CTF challenge that requires the user to exploit LFI to find the flag. Note that this particular app is Linux specific, and the flag must be specified through an environment variable.
